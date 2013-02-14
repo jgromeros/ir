@@ -13,6 +13,7 @@ if __name__ == '__main__':
     for d in sorted(dictionary.keys()):
         print d + " : " + str(dictionary[d].frequency) + " : " + str(dictionary[d].postings)
     print len(dictionary)
-    answer = intersect_several([dictionary[u"tu"]])
+    answer = intersect_several([dictionary[u"tu"], dictionary[u"por"], dictionary[u"te"]])
     for document_found in answer.postings:
         print document_list[document_found]
+    

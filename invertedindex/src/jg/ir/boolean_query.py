@@ -8,18 +8,28 @@ Method for intersecting the posting lists
 '''
 from inverted_index import PostingListItem
 
+'''
+Function for intersecting two posting lists. This will be done for queries with AND
+'''
 def intersect(posting_list_1, posting_list_2):
     answer = PostingListItem([])
-    for post_1 in posting_list_1:
-        for post_2 in posting_list_2:
-            if post_1 == post_2:
-                answer.postings.append(post_1)
-            elif post_1 > post_2:
-                continue
+    i, j = 0, 0
+    while i < len(posting_list_1) and j < len(posting_list_2):
+            if posting_list_1[i] == posting_list_2[j]:
+                answer.postings.append(posting_list_1[i])
+                i += 1
+                j += 1
+            elif posting_list_1[i] > posting_list_2[j]:
+                j += 1
             else:
-                break
+                i += 1
     return answer
 
+'''
+Function that order posting lists in terms of its frequency. Then intersects the
+two posting lists with terms with less frequency, and continues merging posting
+lists in increasing order of frequencies
+'''
 def intersect_several(posting_lists):
     import operator
     posting_lists = sorted(posting_lists, key=operator.attrgetter('frequency'))
@@ -32,3 +42,23 @@ def intersect_several(posting_lists):
             answer = intersect(answer.postings, posting_lists[i].postings)
             i +=1
         return answer
+
+'''
+Funcion for performing unions between posting lists. Useful when using an OR operator
+'''
+def union(posting_list_1, posting_list_2):
+    answer = PostingListItem([])
+    i, j = 0, 0
+    while i < len(posting_list_1.postings) and j < len(posting_list_2.postings):
+        post_1 = posting_list_1.postings[i]
+        post_2 = posting_list_2.postings[j]
+        if post_1 == post_2:
+            i += 1
+            j += 1
+        elif post_1 > post_2:
+            answer.postings.append(post_2)
+            j += 1
+        else:
+            answer.postings.append(post_1)
+            i += 1
+    return answer
