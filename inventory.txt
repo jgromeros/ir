@@ -1,0 +1,1 @@
+1. invertedindex: Crea un indice invertido. Cuenta las apariciones de la palabra en el corpus e ingresa cada aparición en el índice.
