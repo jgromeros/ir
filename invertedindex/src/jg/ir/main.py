@@ -4,7 +4,7 @@ Created on 7/02/2013
 @author: 74187593
 '''
 from inverted_index import build_inverted_index
-from boolean_query import intersect
+from boolean_query import intersect_several
 
 if __name__ == '__main__':
     my_path = 'C:\\temp\\benedetti'
@@ -13,6 +13,6 @@ if __name__ == '__main__':
     for d in sorted(dictionary.keys()):
         print d + " : " + str(dictionary[d].frequency) + " : " + str(dictionary[d].postings)
     print len(dictionary)
-    documents_found = intersect(dictionary[u"alegría"].postings, dictionary["alma"].postings)
-    for document_found in documents_found:
+    answer = intersect_several([dictionary[u"tu"]])
+    for document_found in answer.postings:
         print document_list[document_found]
